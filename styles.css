@@ -1,0 +1,44 @@
+html, body {
+  font-family: 'Bitter', serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #000;
+}
+
+.about-link {
+  font-family: inherit;
+  font-size: 20px;
+  color: #000;
+}
+
+/* Popups use black text */
+#map.leaflet-container,
+#map .leaflet-popup-content,
+#map .leaflet-tooltip {
+  font-family: inherit !important;
+  font-size: inherit;
+  line-height: inherit;
+  color: #000;
+}
+
+/* Links in popups */
+#map .leaflet-popup-content a {
+  color: #004a99;
+  text-decoration: none;
+  font-weight: 700;
+}
+#map .leaflet-popup-content a:hover {
+  text-decoration: underline;
+}
+
+/* Overlay text */
+.overlay, .overlay h2, .overlay p {
+  font-family: inherit;
+  color: #000;
+}
+.overlay h2 {
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  font-size: 28px;
+}
+.overlay p { margin: 0; }
