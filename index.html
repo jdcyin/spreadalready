@@ -126,45 +126,21 @@
     // 1) Structured cheese data (uses local /images folder)
     const cheeses = [
       {
-        name: 'Comté Réserve',
-        lat: 22.442322,
-        lng: 114.165506,
-        region: 'Jura, France',
+        name: 'Boîte chaude',
+        lat: 46.72756,
+        lng: 6.35701,
+        region: 'Mont d\'Or',
         picture: 'images/comte.jpg',
-        thoughts: 'Dense and nutty with browned-butter sweetness and a long, savoury finish.'
+        notes: 'Gluey. Lightly salted. Calm without being upsetting. Tame fun (that doesn\'t last). Like meeting the girlies with newborns you haven\'t seen in a while'
       },
       {
-        name: 'Parmigiano Reggiano',
-        lat: 22.340714,
-        lng: 114.205352,
-        region: 'Emilia-Romagna, Italy',
+        name: 'Mango and Ginger White Stilton',
+        lat: 52.8358,
+        lng: 0.9344,
+        region: 'Long Clawson Dairty, Leicestershire',
         picture: 'images/parmigiano.jpg',
-        thoughts: 'Crystalline crunch, umami-rich; excellent grated or eaten in shards.'
+        notes: 'Panacotta mango. Pitfruit tones (apricot). Sickly. It says, "Not sure if I like cheese but I like yoghurt"'
       },
-      {
-        name: 'Manchego Curado',
-        lat: 22.442874,
-        lng: 114.096066,
-        region: 'La Mancha, Spain',
-        picture: 'images/manchego.jpg',
-        thoughts: 'Buttery with a hint of lanolin; firm paste and gentle sweetness.'
-      },
-      {
-        name: 'Brie de Meaux',
-        lat: 22.415055,
-        lng: 114.380035,
-        region: 'Île-de-France, France',
-        picture: 'images/brie.jpg',
-        thoughts: 'Mushroomy rind, rich creamline; oozy at peak with a vegetal finish.'
-      },
-      {
-        name: 'Roquefort',
-        lat: 22.396809,
-        lng: 114.252896,
-        region: 'Aveyron, France',
-        picture: 'images/roquefort.JPG',
-        thoughts: 'Salty blue veins, peppery bite, and a lingering mineral tang.'
-      }
     ];
 
     // 2) Marker icon helpers
@@ -222,7 +198,7 @@
           <div><b>Region:</b> ${entry.region || '—'}</div>
           <div><b>Picture:</b></div>
           ${imgHtml}
-          <div><b>Tasting thoughts:</b> ${entry.thoughts || '—'}</div>
+          <div><b>Tasting notes:</b> ${entry.notes || '—'}</div>
         </div>
       `;
     }
