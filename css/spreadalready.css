@@ -1,0 +1,184 @@
+/* css/spreadalready.css (updated) */
+
+html, body { height: 100%; margin: 0; padding: 0; }
+#map { height: 100%; width: 100%; }
+[hidden] { display: none !important; }
+
+body {
+  -moz-font-feature-settings: "liga" on;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "liga" on;
+  text-rendering: optimizeLegibility;
+}
+
+/* 10% more opaque yellow */
+:root{
+  --gold: rgba(255, 215, 0, 0.52);
+  --gold-hover: rgba(255, 215, 0, 0.65);
+}
+
+/* ABOUT button */
+.about-link {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: var(--gold);
+  color: #000;
+  padding: 8px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  transition: background 0.2s ease;
+  border: 1px solid rgba(0,0,0,0.06);
+  font-family: 'Bitter', serif;
+}
+.about-link:hover { background: var(--gold-hover); }
+
+/* ABOUT overlay backdrop */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  background: rgba(0,0,0,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+}
+
+/* ABOUT bubble: make font match description font (Libre Franklin) */
+.overlay-box {
+  position: relative;
+  background: var(--gold);
+  color: #000;
+  padding: 24px 28px;
+  width: min(700px, 92vw);
+  border-radius: 12px;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.18);
+  text-align: center;
+  font-family: 'Libre Franklin', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* Keep the title a touch more "poster" while still in same font family */
+.overlay-box h2{
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+.overlay-box p{
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Close button (About) */
+.overlay-close {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: var(--gold);
+  color: #000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+  transition: background 0.2s ease, transform 0.08s ease;
+}
+.overlay-close:hover { background: var(--gold-hover); }
+.overlay-close:active { transform: scale(0.96); }
+
+/* Leaflet popup wrapper */
+.leaflet-popup-content-wrapper {
+  background: var(--gold);
+  color: #000;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.leaflet-popup-content {
+  margin: 12px 14px;
+  color: #000;
+  font-family: 'Libre Franklin', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+}
+
+/* Make Leaflet popup close button match the About "X" */
+.leaflet-container a.leaflet-popup-close-button {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: var(--gold);
+  color: #000;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 700;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+  transition: background 0.2s ease, transform 0.08s ease;
+  text-decoration: none;
+  line-height: 1; /* prevent weird vertical centring issues */
+}
+.leaflet-container a.leaflet-popup-close-button:hover { background: var(--gold-hover); }
+.leaflet-container a.leaflet-popup-close-button:active { transform: scale(0.96); }
+
+/* Popup typography */
+.popup-row { margin: 0 0 10px; }
+
+/* Labels */
+.popup-label {
+  font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0.95;
+  margin-right: 8px;
+  display: inline-block;
+}
+
+/* Values */
+.popup-value {
+  font-family: "Libre Franklin", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.popup-notes {
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.popup-img {
+  display: block;
+  max-width: 100%;
+  border-radius: 6px;
+  margin: 8px 0 12px;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+/* Small screens */
+@media (max-width: 520px) {
+  .popup-label { font-size: 13px; }
+  .popup-value, .popup-notes { font-size: 14px; }
+}
+

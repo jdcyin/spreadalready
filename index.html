@@ -1,3 +1,4 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,8 +6,23 @@
   <title>spreadalready</title>
   <meta content="width=device-width, initial-scale=1" name="viewport" />
 
+  <!-- Social previews -->
+  <meta property="og:site_name" content="spreadalready" />
+  <meta property="og:title" content="spreadalready" />
+  <meta property="og:description" content="A sassy curation of cheeses I've eaten." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary" />
+  <meta property="twitter:title" content="spreadalready" />
+  <meta name="twitter:description" content="A sassy curation of cheeses I've eaten." />
+
+  <meta name="theme-color" content="#FFD700" />
+
+  <!-- Icons -->
+  <link href="images/favicon.png" rel="shortcut icon" type="image/x-icon" />
+  <link href="images/app-icon.png" rel="apple-touch-icon" />
+
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bitter:wght@400;700&family=Inter:wght@400;600;700&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet" />
 
   <!-- Leaflet CSS -->
   <link
@@ -16,104 +32,32 @@
     crossorigin=""
   />
 
-  <!-- Fonts-only stylesheet -->
-  <link rel="stylesheet" href="styles.css" />
-
-  <style>
-    html, body { height: 100%; margin: 0; padding: 0; }
-    #map { height: 100%; width: 100%; }
-    [hidden] { display: none !important; }
-
-    /* ABOUT button */
-    .about-link {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1000;
-      background: rgba(255, 215, 0, 0.42);
-      color: #000;
-      padding: 8px 16px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.18);
-      transition: background 0.2s ease;
-      border: 1px solid rgba(0,0,0,0.06);
-    }
-    .about-link:hover { background: rgba(255, 215, 0, 0.55); }
-
-    /* ABOUT overlay (modal) */
-    .overlay {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1100;
-      background: rgba(255, 215, 0, 0.42);
-      color: #000;
-      padding: 24px 28px;
-      max-width: 700px;
-      border-radius: 12px;
-      box-shadow: 0 12px 36px rgba(0,0,0,0.18);
-      text-align: center;
-    }
-
-    .overlay-close {
-      position: absolute;
-      top: 8px;
-      right: 10px;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      border: 1px solid rgba(0,0,0,0.1);
-      background: rgba(255, 215, 0, 0.42);
-      color: #000;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 18px;
-      font-weight: 700;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.12);
-      transition: background 0.2s ease, transform 0.08s ease;
-    }
-    .overlay-close:hover { background: rgba(255, 215, 0, 0.55); }
-    .overlay-close:active { transform: scale(0.96); }
-
-    /* Popup styling (matches ABOUT box) */
-    .leaflet-popup-content-wrapper {
-      background: rgba(255, 215, 0, 0.42);
-      color: #000;
-      border-radius: 10px;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.25);
-    }
-    .leaflet-popup-content {
-      color: #000;
-      font-family: 'Bitter', serif;
-      font-size: 16px;
-      line-height: 1.45;
-    }
-  </style>
+  <!-- Site CSS -->
+  <link rel="stylesheet" href="css/spreadalready.css" />
 </head>
 
 <body>
   <!-- ABOUT button -->
-  <a href="#" class="about-link" id="aboutBtn" role="button" aria-haspopup="dialog" aria-controls="aboutOverlay">ABOUT</a>
+  <a href="#" class="about-link" id="aboutBtn" role="button" aria-haspopup="dialog" aria-controls="aboutOverlay">
+    ABOUT
+  </a>
 
-  <!-- ABOUT overlay -->
+  <!-- ABOUT overlay (backdrop + centered box) -->
   <div class="overlay" id="aboutOverlay" role="dialog" aria-labelledby="aboutTitle" aria-modal="true" hidden>
-    <button class="overlay-close" id="closeOverlay" aria-label="Close about">×</button>
-    <h2 id="aboutTitle">SPREAD ALREADY</h2>
-    <p><br>
-      Curating the cheeses I've eaten<br><br>
-      jy@spreadalready.com
-    </p>
+    <div class="overlay-box" role="document">
+      <button class="overlay-close" id="closeOverlay" aria-label="Close about" type="button">×</button>
+      <h2 id="aboutTitle">SPREAD ALREADY</h2>
+      <p>
+        <br />
+        A sassy curation of cheeses I've eaten
+        <br /><br />
+        JY@SPREADALREADY.COM
+      </p>
+    </div>
   </div>
 
   <!-- Map -->
-  <div id="map"></div>
+  <div id="map" aria-label="Cheese map"></div>
 
   <!-- Leaflet JS -->
   <script
@@ -126,115 +70,144 @@
     // 1) Structured cheese data (uses local /images folder)
     const cheeses = [
       {
+        picture: 'images/20251207_boitechaude.JPG',
         name: 'Boîte chaude',
+        date: '07 Dec 2025',
         lat: 46.72756,
         lng: 6.35701,
-        region: 'Mont d\'Or',
-        picture: 'images/boitechaude.JPG',
-        notes: 'Gluey. Lightly salted. Calm without being upsetting. Tame fun (that doesn\'t last). Like meeting the girlies with newborns you haven\'t seen in a while'
+        region: "Mont d'Or",
+        notes: "Gluey. Lightly salted. Calm without being upsetting. Tame fun (that doesn't last). Like meeting the girlies with newborns you haven't seen in a while"
       },
       {
+        picture: 'images/20251207_mangostilton.JPG',
         name: 'Mango and Ginger White Stilton',
+        date: '07 Dec 2025',
         lat: 52.8358,
         lng: 0.9344,
         region: 'Long Clawson Dairty, Leicestershire',
-        picture: 'images/mangostilton.JPG',
         notes: 'Panacotta mango. Pitfruit tones (apricot). Sickly. It says, "Not sure if I like cheese but I like yoghurt"'
       },
     ];
 
     // 2) Marker icon helpers
-    // PRESET COLOURS (uses the Leaflet color markers repo)
     function markerIcon(color = 'yellow') {
       return new L.Icon({
         iconUrl: `https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-${color}.png`,
         shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
         iconSize: [25, 41],
         iconAnchor: [12, 41],
-        popupAnchor: [1, -34],
+        popupAnchor: [1, -34],   // default Leaflet behavior: popup above marker
         shadowSize: [41, 41]
       });
     }
 
-    // CUSTOM HEX via SVG (use any color like '#FF5A5F')
-    function svgPin(fill = '#FFD700') {
-      const svg = encodeURIComponent(`
-        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="41" viewBox="0 0 25 41">
-          <path fill="${fill}" d="M12.5 0C5.6 0 0 5.6 0 12.5S12.5 41 12.5 41 25 19.4 25 12.5C25 5.6 19.4 0 12.5 0z"/>
-          <circle cx="12.5" cy="12.5" r="5.5" fill="white"/>
-        </svg>
-      `);
-      return L.icon({
-        iconUrl: `data:image/svg+xml;charset=UTF-8,${svg}`,
-        iconSize: [25, 41],
-        iconAnchor: [12, 41],
-        popupAnchor: [1, -34]
-      });
-    }
-
-    // === CHANGE MARKER COLOUR HERE ===
-    // Use a preset: 'blue', 'red', 'green', 'orange', 'yellow', 'violet', 'grey', 'black'
     const pin = markerIcon('yellow');
-    // Or use any hex color:
-    // const pin = svgPin('#FFD700');
 
     // 3) Initialise map
     const map = L.map('map');
-    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+
+    const tiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
       maxZoom: 19,
       attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
     }).addTo(map);
+
+    // Fix "first click" autopan issues by forcing Leaflet to measure correctly
+    window.addEventListener('load', () => {
+      map.invalidateSize(true);
+    });
+
+    window.addEventListener('resize', () => {
+      map.invalidateSize(true);
+    });
+
+    // Also after tiles load (extra robust)
+    tiles.on('load', () => {
+      map.invalidateSize(true);
+    });
 
     const group = L.featureGroup().addTo(map);
 
     // 4) Render popup HTML dynamically
     function renderPopup(entry) {
       const imgHtml = entry.picture
-        ? `<img src="${entry.picture}" alt="${entry.name}" style="max-width:100%;border-radius:6px;margin:6px 0;">`
+        ? `<img class="popup-img" src="${entry.picture}" alt="${entry.name}">`
         : '';
+
       return `
-        <div>
-          <div><b>Cheese name:</b> ${entry.name}</div>
-          <div><b>Region:</b> ${entry.region || '—'}</div>
-          <div><b>Picture:</b></div>
+        <div class="popup">
           ${imgHtml}
-          <div><b>Tasting notes:</b> ${entry.notes || '—'}</div>
+
+          <div class="popup-row">
+            <span class="popup-label">Cheese name:</span>
+            <span class="popup-value">${entry.name}</span>
+          </div>
+
+          <div class="popup-row">
+            <span class="popup-label">Date:</span>
+            <span class="popup-value">${entry.date || '—'}</span>
+          </div>
+
+          <div class="popup-row">
+            <span class="popup-label">Region:</span>
+            <span class="popup-value">${entry.region || '—'}</span>
+          </div>
+
+          <div class="popup-row">
+            <span class="popup-label">Tasting notes:</span>
+            <span class="popup-value popup-notes">${entry.notes || '—'}</span>
+          </div>
         </div>
       `;
     }
 
-    // 5) Add markers and popups
+    // 5) Add markers and popups (autopan padding prevents top clipping)
     cheeses.forEach((c) => {
       L.marker([c.lat, c.lng], { icon: pin })
         .addTo(group)
-        .bindPopup(renderPopup(c));
+        .bindPopup(renderPopup(c), {
+          maxWidth: 360,
+          autoPan: true,
+          keepInView: true,
+
+          // give room for the top edge + ABOUT button
+          autoPanPaddingTopLeft: L.point(24, 90),
+          autoPanPaddingBottomRight: L.point(24, 24)
+        });
     });
 
-    // 6) Initial view: entire world visible, centred on Czechia
-    // Czechia approx centre: 49.8175 N, 15.4730 E
+    // 6) Initial view
     map.setView([49.8175, 15.4730], 3);
 
-    // 7) ABOUT overlay logic
+    // 7) ABOUT overlay logic (X, Esc, and click outside)
     const aboutBtn = document.getElementById('aboutBtn');
     const aboutOverlay = document.getElementById('aboutOverlay');
     const closeOverlay = document.getElementById('closeOverlay');
+    const overlayBox = aboutOverlay.querySelector('.overlay-box');
+
+    function openAbout() {
+      aboutOverlay.hidden = false;
+      closeOverlay.focus();
+    }
+
+    function closeAbout() {
+      aboutOverlay.hidden = true;
+      aboutBtn.focus();
+    }
 
     aboutBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      aboutOverlay.hidden = false;
-      closeOverlay.focus();
+      openAbout();
     });
 
-    closeOverlay.addEventListener('click', () => {
-      aboutOverlay.hidden = true;
-      aboutBtn.focus();
-    });
+    closeOverlay.addEventListener('click', closeAbout);
 
     document.addEventListener('keydown', (e) => {
-      if (!aboutOverlay.hidden && (e.key === 'Escape' || e.key === 'Esc')) {
-        aboutOverlay.hidden = true;
-        aboutBtn.focus();
-      }
+      if (!aboutOverlay.hidden && (e.key === 'Escape' || e.key === 'Esc')) closeAbout();
+    });
+
+    // Click outside the box closes
+    aboutOverlay.addEventListener('click', (e) => {
+      if (!overlayBox.contains(e.target)) closeAbout();
     });
   </script>
 </body>
