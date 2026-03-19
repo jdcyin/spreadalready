@@ -87,6 +87,15 @@
         region: 'Long Clawson Dairy, Leicestershire',
         notes: 'Panacotta mango. Pitfruit tones (apricot). Sickly. It says, "Not sure if I like cheese but I like yoghurt"'
       },
+      {
+        picture: 'images/20260319_camambertdubocage.JPG',
+        name: 'Camambert du Bocage',
+        date: '19 Mar 2026',
+        lat: 48.699628 ,
+        lng: -0.367093,
+        region: 'Briouze, Normandie, France',
+        notes: 'Baked it and dipped into it. Brilliant creamy smoothness.'
+      },
     ];
 
     // 2) Marker icon helpers
@@ -185,6 +194,7 @@
     const overlayBox = aboutOverlay.querySelector('.overlay-box');
 
     function openAbout() {
+	map.closePopup(); // closes any open cheese popup
       aboutOverlay.hidden = false;
       closeOverlay.focus();
     }
