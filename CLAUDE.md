@@ -28,8 +28,12 @@ Note: `docs/CNAME` (`www.spreadalready.com`) is a leftover from an earlier Pages
 
 The cheese data is a hardcoded JS array (`const cheeses = [...]`) inline in `index.html`, each entry holding `picture`, `name`, `date`, `lat`, `lng`, `region`, `notes` (an HTML string). The page renders an interactive 2D map with [Leaflet](https://leafletjs.com/) (loaded via CDN, no local copy) using CARTO's light basemap tiles, and drops one marker per cheese at its lat/lng with a themed popup built by `renderPopup()`. A separate "ABOUT" button/overlay (plain DOM show/hide, no library) shows a short bio blurb.
 
-### Visual identity to preserve
+### Current visual identity (not a constraint — see below)
 
 - Fonts: `Bitter` (serif, headings/body) and `Libre Franklin` (popups/overlay body copy) and `Inter` (uppercase popup labels), all loaded from Google Fonts.
 - Palette: translucent gold/yellow (`rgba(255, 215, 0, ~0.5)`, defined as `--gold` / `--gold-hover` in `css/spreadalready.css`) on black text, rounded corners, soft drop shadows — applied consistently to the ABOUT overlay and map popups.
 - Tone: the tasting notes are written in a distinct, sassy/personal voice (often multi-quote, conversational) — this is real personal content, not boilerplate, and should be preserved verbatim when the site evolves.
+
+## Design direction: full redesign in progress
+
+The owner is intentionally redesigning the entire site (working name: "cheese globe" — an interactive 3D globe replacing the current 2D Leaflet map as the homepage centerpiece). **The visual design above is not sacred** — colors, typography, layout, and the map/marker approach are all open to being fully replaced. What must be preserved is the underlying *content*: the real cheese entries (names, coordinates, dates, tasting notes verbatim, photos) and the personal/sassy voice — not the current CSS or Leaflet implementation. Treat this as an active initiative, not a constraint to work around.
