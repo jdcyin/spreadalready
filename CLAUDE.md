@@ -34,6 +34,11 @@ The cheese data is a hardcoded JS array (`const cheeses = [...]`) inline in `ind
 - Palette: translucent gold/yellow (`rgba(255, 215, 0, ~0.5)`, defined as `--gold` / `--gold-hover` in `css/spreadalready.css`) on black text, rounded corners, soft drop shadows — applied consistently to the ABOUT overlay and map popups.
 - Tone: the tasting notes are written in a distinct, sassy/personal voice (often multi-quote, conversational) — this is real personal content, not boilerplate, and should be preserved verbatim when the site evolves.
 
+## Workflow
+
+- Work happens on feature branches (e.g. `spreadalready-new`), pushed to `origin`, with a PR back to `main` for review — not direct commits to `main` — since `main` auto-deploys via GitHub Pages.
+- **Design review gate**: for this redesign, do not implement major visual/structural changes directly in code. First produce a visual mockup (e.g. via the `design` skill) for the owner to review. Expect several rounds of mockup iteration and explicit approval before writing the real HTML/CSS/JS. Small, obviously-reversible tweaks don't need this, but anything shaping the new homepage/globe direction does.
+
 ## Design direction: full redesign in progress
 
 The owner is intentionally redesigning the entire site. The project's name stays **SpreadAlready** — "cheese globe" is not a rename, it's just the shape of the new homepage centerpiece: an interactive 3D globe replacing the current 2D Leaflet map. **The visual design above is not sacred** — colors, typography, layout, and the map/marker approach are all open to being fully replaced. What must be preserved is the underlying *content*: the real cheese entries (names, coordinates, dates, tasting notes verbatim, photos) and the personal/sassy voice — not the current CSS or Leaflet implementation. Treat this as an active initiative, not a constraint to work around.
