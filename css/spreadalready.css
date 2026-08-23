@@ -21,8 +21,29 @@
   --backdrop: rgba(58, 52, 44, 0.22);
 }
 
+:root[data-theme="light"] {
+  --bg: #FAF7F1;
+  --ink: #3A342C;
+  --muted: #8C8577;
+  --about-bg: rgba(58, 52, 44, 0.05);
+  --about-border: rgba(58, 52, 44, 0.22);
+  --about-hover: rgba(58, 52, 44, 0.09);
+  --card-bg: #FFFDF9;
+  --card-border: rgba(58, 52, 44, 0.12);
+  --card-shadow: rgba(58, 52, 44, 0.18);
+  --leader-color: #C9971E;
+  --cheese-fill: #D79A2C;
+  --cheese-rind: #C9971E;
+  --drag-color: #85936F;
+  --globe-ocean: #EAE0C8;
+  --globe-land-fill: rgba(133, 147, 111, 0.14);
+  --globe-land-stroke: rgba(58, 52, 44, 0.55);
+  --atmosphere: #E4DCC9;
+  --backdrop: rgba(58, 52, 44, 0.22);
+}
+
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg: #16110D;
     --ink: #F3E9D6;
     --muted: #B9A98C;
@@ -37,11 +58,32 @@
     --cheese-rind: #D6A94D;
     --drag-color: #D6A94D;
     --globe-ocean: #1C150F;
-    --globe-land-fill: rgba(214, 169, 77, 0.14);
-    --globe-land-stroke: #D6A94D;
+    --globe-land-fill: rgba(214, 169, 77, 0.06);
+    --globe-land-stroke: rgba(214, 169, 77, 0.16);
     --atmosphere: #D6A94D;
     --backdrop: rgba(0, 0, 0, 0.55);
   }
+}
+
+:root[data-theme="dark"] {
+  --bg: #16110D;
+  --ink: #F3E9D6;
+  --muted: #B9A98C;
+  --about-bg: rgba(243, 233, 214, 0.06);
+  --about-border: rgba(243, 233, 214, 0.22);
+  --about-hover: rgba(243, 233, 214, 0.11);
+  --card-bg: #1E1712;
+  --card-border: rgba(214, 169, 77, 0.22);
+  --card-shadow: rgba(0, 0, 0, 0.55);
+  --leader-color: #D6A94D;
+  --cheese-fill: #F0C15C;
+  --cheese-rind: #D6A94D;
+  --drag-color: #D6A94D;
+  --globe-ocean: #1C150F;
+  --globe-land-fill: rgba(214, 169, 77, 0.06);
+  --globe-land-stroke: rgba(214, 169, 77, 0.16);
+  --atmosphere: #D6A94D;
+  --backdrop: rgba(0, 0, 0, 0.55);
 }
 
 * { box-sizing: border-box; }
@@ -119,17 +161,33 @@ body {
 }
 .drag-hint.hidden { opacity: 0; pointer-events: none; }
 
-/* Globe markers */
+/* Globe markers.
+   three-globe centers this button's own (symmetric) box on the marker's lat/lng.
+   The icon is then absolutely positioned so its bottom (the wedge's tip) sits at
+   that same center point — the tip is the anchor, not the icon's own middle. */
 .globe-marker {
   position: relative;
   background: none;
   border: none;
-  padding: 8px;
-  margin: -8px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
   cursor: pointer;
   display: block;
 }
-.marker-icon { display: block; transition: transform 0.15s ease; }
+.marker-visual {
+  position: absolute;
+  left: 50%;
+  bottom: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 22px;
+}
+.marker-icon {
+  display: block;
+  transition: transform 0.15s ease;
+  transform-origin: 50% 100%; /* scale from the tip, not the center, so it stays anchored */
+}
 .marker-icon .cheese-fill { fill: var(--cheese-fill); }
 .marker-icon .cheese-outline { stroke: var(--cheese-rind); stroke-width: 1.1; }
 .marker-icon .cheese-hole { fill: var(--cheese-rind); opacity: 0.6; }
@@ -138,7 +196,8 @@ body {
 
 .marker-label {
   position: absolute;
-  bottom: 130%;
+  bottom: 100%;
+  margin-bottom: 6px;
   left: 50%;
   transform: translateX(-50%);
   background: var(--card-bg);
@@ -197,6 +256,13 @@ body {
 }
 .overlay-close:hover { color: var(--ink); }
 
+.about-title {
+  font-family: 'Libre Franklin', system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  letter-spacing: 2px;
+  margin: 0 0 10px;
+}
 .about-tagline {
   font-family: 'Libre Franklin', system-ui, sans-serif;
   font-weight: 800;
@@ -287,7 +353,7 @@ body {
   margin: 18px 0 5px;
   line-height: 1.2;
 }
-.card-meta { font-size: 12px; margin-bottom: 16px; color: var(--muted); }
+.card-meta { font-size: 14px; margin-bottom: 16px; color: var(--muted); }
 .card-notes p { font-size: 14px; line-height: 1.55; margin: 0 0 12px; }
 
 .card-list-heading {

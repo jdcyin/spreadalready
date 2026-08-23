@@ -3,16 +3,28 @@
   'use strict';
 
   var COUNTRIES_URL = 'https://cdn.jsdelivr.net/gh/vasturiano/globe.gl@v2.46.2/example/datasets/ne_110m_admin_0_countries.geojson';
-  var CHEESE_ICON = '<svg class="marker-icon" width="20" height="20" viewBox="0 0 24 24">' +
-    '<path class="cheese-fill" d="M4 19 L12 5 L20 19 Q12 23 4 19 Z"></path>' +
-    '<path class="cheese-outline" fill="none" d="M4 19 L12 5 L20 19 Q12 23 4 19 Z"></path>' +
-    '<circle class="cheese-hole" cx="10.4" cy="14.6" r="1.15"></circle>' +
-    '<circle class="cheese-hole" cx="15" cy="16.2" r="0.9"></circle>' +
+  var ICON_SIZE = 22;
+  // Wedge points DOWN — the sharp tip at the bottom is the exact anchor for the
+  // marker's lat/lng (see the padding-top trick on .globe-marker in the CSS).
+  // Shape fills the viewBox edge-to-edge (tip at y=24, top rind at y~1) so the
+  // icon's own bounding box bottom IS the tip — needed for the anchor math below.
+  var CHEESE_ICON = '<svg class="marker-icon" width="' + ICON_SIZE + '" height="' + ICON_SIZE + '" viewBox="0 0 24 24">' +
+    '<path class="cheese-fill" d="M6,3 Q12,0.5 18,3 Q17,13.5 12,24 Q7,13.5 6,3 Z"></path>' +
+    '<path class="cheese-outline" fill="none" d="M6,3 Q12,0.5 18,3 Q17,13.5 12,24 Q7,13.5 6,3 Z"></path>' +
+    '<circle class="cheese-hole" cx="10.2" cy="7.5" r="1.1"></circle>' +
+    '<circle class="cheese-hole" cx="14" cy="9.2" r="0.85"></circle>' +
     '</svg>';
   var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   var MOBILE_QUERY = '(max-width: 820px)';
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ?theme=light or ?theme=dark forces a theme regardless of system preference
+  // (useful for reviewing both — the site otherwise just follows prefers-color-scheme).
+  var themeOverride = new URLSearchParams(location.search).get('theme');
+  if (themeOverride === 'light' || themeOverride === 'dark') {
+    document.documentElement.setAttribute('data-theme', themeOverride);
+  }
 
   var container = document.getElementById('globeContainer');
   var dragHint = document.getElementById('dragHint');
@@ -76,7 +88,7 @@
     globeMaterial.color.set(cssVar('--globe-ocean'));
     world.atmosphereColor(cssVar('--atmosphere'));
     world.polygonCapColor(function () { return cssVar('--globe-land-fill'); });
-    world.polygonSideColor(function () { return cssVar('--globe-land-fill'); });
+    world.polygonSideColor(function () { return 'rgba(0,0,0,0)'; });
     world.polygonStrokeColor(function () { return cssVar('--globe-land-stroke'); });
   }
 
@@ -134,12 +146,21 @@
       ? (loc.cheeses.length + ' cheeses near ' + loc.cheeses[0].region)
       : loc.cheeses[0].name;
     btn.setAttribute('aria-label', label);
-    btn.innerHTML = CHEESE_ICON;
+
+    // The button carries the hit-area padding; three-globe centers the button's
+    // own box on the lat/lng point, so padding-top == icon height shifts that
+    // center down to the icon's bottom tip. This inner span is unpadded, so the
+    // hover label positions tightly against the icon rather than the hit box.
+    var visual = document.createElement('span');
+    visual.className = 'marker-visual';
+    visual.innerHTML = CHEESE_ICON;
 
     var labelEl = document.createElement('span');
     labelEl.className = 'marker-label';
     labelEl.textContent = loc.cheeses.length > 1 ? (loc.cheeses.length + ' cheeses') : loc.cheeses[0].name;
-    btn.appendChild(labelEl);
+    visual.appendChild(labelEl);
+
+    btn.appendChild(visual);
 
     btn.addEventListener('click', function (e) {
       e.stopPropagation();
