@@ -313,11 +313,6 @@ body {
 .leader-line circle { fill: var(--leader-color); }
 
 /* Cheese detail card */
-.card-catcher {
-  position: absolute;
-  inset: 0;
-  z-index: 18;
-}
 
 .card-panel {
   position: absolute;

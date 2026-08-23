@@ -58,7 +58,6 @@
   var themeToggle = document.getElementById('themeToggle');
   var aboutOverlay = document.getElementById('aboutOverlay');
   var aboutClose = document.getElementById('aboutClose');
-  var cardCatcher = document.getElementById('cardCatcher');
   var cardPanel = document.getElementById('cardPanel');
   var cardClose = document.getElementById('cardClose');
   var cardBody = document.getElementById('cardBody');
@@ -80,6 +79,17 @@
       el.style.pointerEvents = isVisible ? 'auto' : 'none';
       el.dataset.visible = isVisible ? '1' : '0';
     });
+
+  // Markers stop propagation on their own click, so this only ever fires for
+  // clicks elsewhere in the globe area (sphere surface or the empty background
+  // around it) — used to close the card without a full-screen catch layer that
+  // would otherwise block marker clicks and scroll-to-zoom while a card is open.
+  // (globe.gl's onGlobeClick only fires for raycast hits on the sphere itself,
+  // not clicks on the transparent background around it, so a plain DOM listener
+  // on the container covers both.)
+  container.addEventListener('click', function () {
+    if (!cardPanel.hidden) closeCard();
+  });
 
   var globeMaterial = world.globeMaterial();
 
@@ -350,13 +360,11 @@
   }
 
   function openCard() {
-    cardCatcher.hidden = false;
     cardPanel.hidden = false;
     dragHint.classList.add('hidden');
   }
 
   function closeCard() {
-    cardCatcher.hidden = true;
     cardPanel.hidden = true;
     leaderLine.classList.add('hidden');
     currentLocation = null;
@@ -366,7 +374,6 @@
     currentMarkerEl = null;
   }
 
-  cardCatcher.addEventListener('click', closeCard);
   cardClose.addEventListener('click', closeCard);
 
   function tick() {
