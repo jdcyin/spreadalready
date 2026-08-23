@@ -3,11 +3,11 @@
   'use strict';
 
   var COUNTRIES_URL = 'https://cdn.jsdelivr.net/gh/vasturiano/globe.gl@v2.46.2/example/datasets/ne_110m_admin_0_countries.geojson';
-  var ICON_SIZE = 22;
+  var ICON_SIZE = 16;
   // Wedge points DOWN — the sharp tip at the bottom is the exact anchor for the
-  // marker's lat/lng (see the padding-top trick on .globe-marker in the CSS).
+  // marker's lat/lng (see .marker-visual's bottom:50% positioning in the CSS).
   // Shape fills the viewBox edge-to-edge (tip at y=24, top rind at y~1) so the
-  // icon's own bounding box bottom IS the tip — needed for the anchor math below.
+  // icon's own bounding box bottom IS the tip — needed for that anchor math.
   var CHEESE_ICON = '<svg class="marker-icon" width="' + ICON_SIZE + '" height="' + ICON_SIZE + '" viewBox="0 0 24 24">' +
     '<path class="cheese-fill" d="M6,3 Q12,0.5 18,3 Q17,13.5 12,24 Q7,13.5 6,3 Z"></path>' +
     '<path class="cheese-outline" fill="none" d="M6,3 Q12,0.5 18,3 Q17,13.5 12,24 Q7,13.5 6,3 Z"></path>' +
@@ -19,16 +19,43 @@
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ?theme=light or ?theme=dark forces a theme regardless of system preference
-  // (useful for reviewing both — the site otherwise just follows prefers-color-scheme).
+  var THEME_KEY = 'sa-theme';
+  var SUN_ICON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>';
+  var MOON_ICON = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"></path></svg>';
+
+  // Theme resolution order: an explicit ?theme= link, then a saved manual choice,
+  // then whatever the OS/browser prefers. The toggle button always writes a manual
+  // choice, which then wins over the system preference from then on.
   var themeOverride = new URLSearchParams(location.search).get('theme');
   if (themeOverride === 'light' || themeOverride === 'dark') {
     document.documentElement.setAttribute('data-theme', themeOverride);
+  } else {
+    var storedTheme = getStoredTheme();
+    if (storedTheme) document.documentElement.setAttribute('data-theme', storedTheme);
+  }
+
+  function getStoredTheme() {
+    try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; }
+  }
+  function setStoredTheme(theme) {
+    try { localStorage.setItem(THEME_KEY, theme); } catch (e) { /* ignore */ }
+  }
+  function currentTheme() {
+    var attr = document.documentElement.getAttribute('data-theme');
+    if (attr === 'light' || attr === 'dark') return attr;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  function refreshTheme() {
+    applyColors();
+    var eff = currentTheme();
+    themeToggle.innerHTML = eff === 'dark' ? SUN_ICON : MOON_ICON;
+    themeToggle.setAttribute('aria-label', eff === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
   }
 
   var container = document.getElementById('globeContainer');
   var dragHint = document.getElementById('dragHint');
   var aboutBtn = document.getElementById('aboutBtn');
+  var themeToggle = document.getElementById('themeToggle');
   var aboutOverlay = document.getElementById('aboutOverlay');
   var aboutClose = document.getElementById('aboutClose');
   var cardCatcher = document.getElementById('cardCatcher');
@@ -74,11 +101,18 @@
 
   world.pointOfView({ lat: 35, lng: 8, altitude: 2.3 }, 0);
 
-  applyColors();
+  refreshTheme();
   var darkSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
   (darkSchemeQuery.addEventListener
-    ? darkSchemeQuery.addEventListener('change', applyColors)
-    : darkSchemeQuery.addListener(applyColors));
+    ? darkSchemeQuery.addEventListener('change', refreshTheme)
+    : darkSchemeQuery.addListener(refreshTheme));
+
+  themeToggle.addEventListener('click', function () {
+    var next = currentTheme() === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    setStoredTheme(next);
+    refreshTheme();
+  });
 
   function cssVar(name) {
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
@@ -147,10 +181,9 @@
       : loc.cheeses[0].name;
     btn.setAttribute('aria-label', label);
 
-    // The button carries the hit-area padding; three-globe centers the button's
-    // own box on the lat/lng point, so padding-top == icon height shifts that
-    // center down to the icon's bottom tip. This inner span is unpadded, so the
-    // hover label positions tightly against the icon rather than the hit box.
+    // btn is a plain symmetric hit target that three-globe centers on the lat/lng
+    // point; .marker-visual is absolutely positioned within it so the icon's tip
+    // (not the icon's own middle) lands on that center — see the CSS.
     var visual = document.createElement('span');
     visual.className = 'marker-visual';
     visual.innerHTML = CHEESE_ICON;
