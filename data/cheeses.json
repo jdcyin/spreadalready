@@ -17,7 +17,7 @@
     "name": "Mango and Ginger White Stilton",
     "region": "Long Clawson Dairy, Leicestershire",
     "latitude": 52.8358,
-    "longitude": 0.9344,
+    "longitude": -0.9344,
     "dateTasted": "2025-12-07",
     "notes": [
       "Panacotta mango. Pitfruit tones (apricot). Sickly. It says, \"Not sure if I like cheese but I like yoghurt\""
@@ -74,8 +74,8 @@
     "id": "rocamadour-fermier",
     "name": "Rocamadour Fermier",
     "region": "Quercy, Lot, France",
-    "latitude": 44.428992279477086,
-    "longitude": 1.469813705689586,
+    "latitude": 44.8003,
+    "longitude": 1.6186,
     "dateTasted": "2026-03-29",
     "notes": [
       "\"It reminds me of Lunchables, bitter lunchables.\"",

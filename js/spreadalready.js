@@ -2,7 +2,10 @@
 (function () {
   'use strict';
 
-  var COUNTRIES_URL = 'https://cdn.jsdelivr.net/gh/vasturiano/globe.gl@v2.46.2/example/datasets/ne_110m_admin_0_countries.geojson';
+  // 50m-resolution TopoJSON (world-atlas) — noticeably finer than the 110m data
+  // this used before, which oversimplified borders enough to misplace markers
+  // near mountainous/border regions (e.g. the France/Switzerland border).
+  var COUNTRIES_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json';
   var ICON_SIZE = 16;
   // Wedge points DOWN — the sharp tip at the bottom is the exact anchor for the
   // marker's lat/lng (see .marker-visual's bottom:50% positioning in the CSS).
@@ -155,9 +158,10 @@
 
   fetch(COUNTRIES_URL)
     .then(function (res) { return res.json(); })
-    .then(function (countries) {
-      var features = countries.features.filter(function (f) {
-        return f.properties && f.properties.ISO_A2 !== 'AQ';
+    .then(function (topology) {
+      var geo = topojson.feature(topology, topology.objects.countries);
+      var features = geo.features.filter(function (f) {
+        return f.properties && f.properties.name !== 'Antarctica';
       });
       world.polygonsData(features).polygonAltitude(0.006);
     })
