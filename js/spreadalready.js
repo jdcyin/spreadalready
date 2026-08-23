@@ -83,6 +83,15 @@
 
   var globeMaterial = world.globeMaterial();
 
+  // Soften the directional-light highlight in light mode only — dark mode's
+  // glow already reads well, but the same intensity looked glaringly bright
+  // against the light theme's pale ocean color.
+  var sceneLights = world.lights();
+  var ambientLight = sceneLights.filter(function (l) { return l.type === 'AmbientLight'; })[0];
+  var directionalLight = sceneLights.filter(function (l) { return l.type === 'DirectionalLight'; })[0];
+  var baseAmbientIntensity = ambientLight ? ambientLight.intensity : null;
+  var baseDirectionalIntensity = directionalLight ? directionalLight.intensity : null;
+
   var controls = world.controls();
   controls.enableDamping = true;
   controls.dampingFactor = 0.08;
@@ -127,6 +136,14 @@
     world.polygonCapColor(function () { return cssVar('--globe-land-fill'); });
     world.polygonSideColor(function () { return 'rgba(0,0,0,0)'; });
     world.polygonStrokeColor(function () { return cssVar('--globe-land-stroke'); });
+
+    var isLight = currentTheme() === 'light';
+    if (ambientLight && baseAmbientIntensity != null) {
+      ambientLight.intensity = isLight ? baseAmbientIntensity * 0.85 : baseAmbientIntensity;
+    }
+    if (directionalLight && baseDirectionalIntensity != null) {
+      directionalLight.intensity = isLight ? baseDirectionalIntensity * 0.7 : baseDirectionalIntensity;
+    }
   }
 
   function resizeGlobe() {
