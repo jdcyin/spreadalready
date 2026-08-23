@@ -86,7 +86,10 @@
   var controls = world.controls();
   controls.enableDamping = true;
   controls.dampingFactor = 0.08;
-  controls.enableZoom = false;
+  controls.enableZoom = true;
+  controls.minDistance = 130; // globe radius is 100 — don't let the camera clip into the surface
+  controls.maxDistance = 380; // a bit past the default 330 framing, not unbounded
+  controls.zoomSpeed = 0.6;
   controls.enablePan = false;
   controls.rotateSpeed = 0.5;
   controls.autoRotate = !reduceMotion;
