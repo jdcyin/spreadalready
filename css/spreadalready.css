@@ -162,10 +162,10 @@ body {
 }
 
 .globe-container {
-  width: min(90vw, 900px);
-  height: min(90vw, 900px);
-  max-width: 900px;
-  max-height: 900px;
+  width: min(92vw, 940px);
+  height: min(92vw, 940px);
+  flex-shrink: 0; /* a flex column's main axis (height) shrinks by default, which
+    would otherwise squash this away from square once it's taller than the hero */
 }
 .globe-container canvas { display: block; outline: none; }
 
@@ -225,8 +225,10 @@ body {
   border: 1px solid var(--card-border);
   padding: 4px 10px;
   border-radius: 999px;
+  font-family: 'Libre Franklin', system-ui, sans-serif;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 800;
+  letter-spacing: -0.2px;
   white-space: nowrap;
   opacity: 0;
   pointer-events: none;
@@ -410,7 +412,7 @@ body {
 @media (max-width: 820px) {
   .about-btn { top: 20px; width: 36px; height: 36px; font-size: 15px; }
   .theme-toggle { top: 20px; right: 20px; width: 36px; height: 36px; }
-  .globe-container { width: 88vw; height: 88vw; max-width: 520px; max-height: 520px; }
+  .globe-container { width: min(92vw, 560px); height: min(92vw, 560px); }
 
   .leader-line { display: none; }
 
