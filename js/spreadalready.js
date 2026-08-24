@@ -111,6 +111,8 @@
   controls.zoomSpeed = 0.6;
   controls.enablePan = false;
   controls.rotateSpeed = 0.5;
+  controls.minPolarAngle = 0; // explicit full range pole-to-pole — no vertical clamping
+  controls.maxPolarAngle = Math.PI;
   controls.autoRotate = !reduceMotion;
   controls.autoRotateSpeed = 0.35;
 
