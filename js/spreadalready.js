@@ -123,7 +123,7 @@
   }
   controls.addEventListener('start', onControlsStart);
 
-  world.pointOfView({ lat: 35, lng: 8, altitude: 1.7 }, 0);
+  world.pointOfView({ lat: 35, lng: 8, altitude: 2.0 }, 0);
 
   refreshTheme();
   var darkSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
