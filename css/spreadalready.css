@@ -58,8 +58,8 @@
     --cheese-rind: #D6A94D;
     --drag-color: #D6A94D;
     --globe-ocean: #1C150F;
-    --globe-land-fill: rgba(214, 169, 77, 0.06);
-    --globe-land-stroke: rgba(214, 169, 77, 0.16);
+    --globe-land-fill: rgba(214, 169, 77, 0.10);
+    --globe-land-stroke: rgba(214, 169, 77, 0.38);
     --atmosphere: #D6A94D;
     --backdrop: rgba(0, 0, 0, 0.55);
   }
@@ -80,8 +80,8 @@
   --cheese-rind: #D6A94D;
   --drag-color: #D6A94D;
   --globe-ocean: #1C150F;
-  --globe-land-fill: rgba(214, 169, 77, 0.06);
-  --globe-land-stroke: rgba(214, 169, 77, 0.16);
+  --globe-land-fill: rgba(214, 169, 77, 0.10);
+  --globe-land-stroke: rgba(214, 169, 77, 0.38);
   --atmosphere: #D6A94D;
   --backdrop: rgba(0, 0, 0, 0.55);
 }
