@@ -1,0 +1,106 @@
+[
+  {
+    "id": "boite-chaude",
+    "name": "Boîte chaude",
+    "region": "Mont d'Or",
+    "latitude": 46.72756,
+    "longitude": 6.35701,
+    "dateTasted": "2025-12-07",
+    "notes": [
+      "Gluey. Lightly salted. Calm without being upsetting. Tame fun (that doesn't last). Like meeting the girlies with newborns you haven't seen in a while"
+    ],
+    "image": "images/cheeses/boite-chaude.jpg",
+    "tastedAt": ""
+  },
+  {
+    "id": "mango-ginger-white-stilton",
+    "name": "Mango and Ginger White Stilton",
+    "region": "Long Clawson Dairy, Leicestershire",
+    "latitude": 52.8358,
+    "longitude": -0.9344,
+    "dateTasted": "2025-12-07",
+    "notes": [
+      "Panacotta mango. Pitfruit tones (apricot). Sickly. It says, \"Not sure if I like cheese but I like yoghurt\""
+    ],
+    "image": "images/cheeses/mango-ginger-white-stilton.jpg",
+    "tastedAt": ""
+  },
+  {
+    "id": "camembert-du-bocage",
+    "name": "Camambert du Bocage",
+    "region": "Briouze, Normandie, France",
+    "latitude": 48.699628,
+    "longitude": -0.367093,
+    "dateTasted": "2026-03-19",
+    "notes": [
+      "Baked it and dipped into it. Brilliant creamy smoothness."
+    ],
+    "image": "images/cheeses/camembert-du-bocage.jpg",
+    "tastedAt": ""
+  },
+  {
+    "id": "ecir-de-laubrac",
+    "name": "L'ecir de L'aubrac",
+    "region": "Vergne Plaine, Laguiole, France",
+    "latitude": 44.68905395606905,
+    "longitude": 2.848092457439639,
+    "dateTasted": "2026-03-29",
+    "notes": [
+      "\"Soft, feminine, floral. White girl in green house about the orient.\"",
+      "\"Im getting plaster... wall plaster in particular.\"",
+      "\"Watered down brie...  the linger. Gayish.\"",
+      "\"Not goat forward, but goat backwards... goat on the back.\""
+    ],
+    "image": "images/cheeses/ecir-de-laubrac.jpg",
+    "tastedAt": ""
+  },
+  {
+    "id": "ecir-frais-emballe",
+    "name": "Ecir Frais Emballé",
+    "region": "Châteaubourg, France",
+    "latitude": 48.09592514914743,
+    "longitude": -1.4262663372621247,
+    "dateTasted": "2026-03-29",
+    "notes": [
+      "\"Denser than you'd expect.\"",
+      "\"Cheesecake. Cream cheese? It is cream cheese. Maybe a cashew.\"",
+      "\"Quite fun and unassuming.\"",
+      "\"A crowd please... a cheese for the masses. Art Basel reception cheese\"."
+    ],
+    "image": "images/cheeses/ecir-frais-emballe.jpg",
+    "tastedAt": ""
+  },
+  {
+    "id": "rocamadour-fermier",
+    "name": "Rocamadour Fermier",
+    "region": "Quercy, Lot, France",
+    "latitude": 44.8003,
+    "longitude": 1.6186,
+    "dateTasted": "2026-03-29",
+    "notes": [
+      "\"It reminds me of Lunchables, bitter lunchables.\"",
+      "\"Almond.\"",
+      "\"Bitter, yes, that's what I said: alkali\"",
+      "\"Charred French cheese.\""
+    ],
+    "image": "images/cheeses/rocamadour-fermier.jpg",
+    "tastedAt": ""
+  },
+  {
+    "id": "roquefort-la-cave",
+    "name": "Roquefort La Cave (Wedge)",
+    "region": "Roquefort-sur-Soulzon, France",
+    "latitude": 43.976171494954016,
+    "longitude": 2.9905962952642526,
+    "dateTasted": "2026-03-29",
+    "notes": [
+      "\"It tells you a story.\"",
+      "\"It's got pops of mould.\"",
+      "\"I'm getting onion soup... in beef stock\"",
+      "\"You're eating cheese then you get a salmon egg.\"",
+      "\"Yeah, bleu cheese to me. makes me wanna crumble it up and put it in a salad.\""
+    ],
+    "image": "images/cheeses/roquefort-la-cave.jpg",
+    "tastedAt": ""
+  }
+]
