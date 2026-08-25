@@ -123,7 +123,25 @@
   }
   controls.addEventListener('start', onControlsStart);
 
-  world.pointOfView({ lat: 35, lng: 8, altitude: 2.0 }, 0);
+  // The camera's field of view is fixed vertically; on a narrow/portrait
+  // viewport the horizontal extent is much tighter than on desktop, so a
+  // fixed distance that looks right on desktop overflows off the sides of a
+  // phone screen. Fit to whichever dimension (width or height) is tighter,
+  // at the same fill fraction the desktop framing already uses (~0.715 of
+  // the half-extent) so desktop is unaffected but portrait no longer overflows.
+  var globeRadius = world.getGlobeRadius();
+  var camera = world.camera();
+  var FIT_FRACTION = 0.715;
+
+  function fittedDistance() {
+    var aspect = container.clientWidth / container.clientHeight;
+    var vFovRad = camera.fov * Math.PI / 180;
+    return globeRadius / (FIT_FRACTION * Math.tan(vFovRad / 2) * Math.min(1, aspect));
+  }
+
+  var initialDistance = fittedDistance();
+  controls.maxDistance = Math.max(380, initialDistance + 50);
+  world.pointOfView({ lat: 35, lng: 8, altitude: initialDistance / globeRadius - 1 }, 0);
 
   refreshTheme();
   var darkSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -163,7 +181,16 @@
   }
   resizeGlobe();
   window.addEventListener('resize', resizeGlobe);
-  window.addEventListener('orientationchange', resizeGlobe);
+  // Orientation change swings the aspect ratio dramatically (portrait <->
+  // landscape), so re-fit the distance too, not just the canvas pixel size —
+  // otherwise rotating into portrait keeps whatever distance was fit for
+  // landscape and the globe overflows again.
+  window.addEventListener('orientationchange', function () {
+    resizeGlobe();
+    var dist = fittedDistance();
+    controls.maxDistance = Math.max(380, dist + 50);
+    world.pointOfView({ altitude: dist / globeRadius - 1 }, 300);
+  });
 
   fetch(COUNTRIES_URL)
     .then(function (res) { return res.json(); })
